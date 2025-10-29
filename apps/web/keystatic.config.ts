@@ -5,7 +5,17 @@ import { config, fields, collection, singleton } from '@keystatic/core'
 // and KEYSTATIC_SECRET from environment variables - they don't need to be in the config object
 const githubOwner = process.env.KEYSTATIC_GITHUB_OWNER
 const githubRepo = process.env.KEYSTATIC_GITHUB_REPO
-const hasGitHubConfig = githubOwner && githubRepo
+const githubClientId = process.env.KEYSTATIC_GITHUB_CLIENT_ID
+const githubClientSecret = process.env.KEYSTATIC_GITHUB_CLIENT_SECRET
+const keystaticSecret = process.env.KEYSTATIC_SECRET
+
+// Only enable GitHub mode if ALL required variables are present
+const hasGitHubConfig = 
+  githubOwner && 
+  githubRepo && 
+  githubClientId && 
+  githubClientSecret && 
+  keystaticSecret
 
 const keystaticConfig = config({
   storage: hasGitHubConfig
