@@ -19,8 +19,7 @@ async function readYamlFile(filePath: string) {
 }
 
 export async function getSettings() {
-  const settings = await readYamlFile('content/settings/index.yaml')
-  return settings || {
+  const defaults = {
     siteName: 'ftiaxesite.gr',
     siteDescription: 'AI Websites σε 48 Ώρες',
     contactEmail: 'info@ftiaxesite.gr',
@@ -38,21 +37,35 @@ export async function getSettings() {
       { label: 'Πολιτική Απορρήτου', href: '/privacy' },
     ],
   }
+
+  const settings = await readYamlFile('content/settings/index.yaml')
+  
+  // If settings is null/undefined, return defaults
+  if (!settings) {
+    return defaults
+  }
+  
+  // If settings is an empty object or missing required properties, merge with defaults
+  if (typeof settings !== 'object' || !settings.siteName) {
+    return { ...defaults, ...settings }
+  }
+  
+  // Merge to ensure all properties exist
+  return { ...defaults, ...settings }
 }
 
 export async function getHomepageContent() {
-      const homepage = await readYamlFile('content/homepage/index.yaml')
-      return homepage || {
-        heroHeadline: 'Φτιάξε το site σου σε 48 ώρες — από 250€',
-        heroSubheadline: 'Με τη δύναμη της Τεχνητής Νοημοσύνης, δημιουργούμε γρήγορα, οικονομικά και επαγγελματικά websites.',
-        heroCta: 'Ξεκίνα τώρα',
-        heroImage: '/images/hero-image.jpg',
-        heroBadge: 'AI-Powered Web Development',
-        heroStats: '100+ ικανοποιημένοι πελάτες',
-        featuresTitle: 'Γιατί να μας επιλέξεις',
-        featuresSubtitle: 'Όλα όσα χρειάζεσαι για να έχεις έτοιμο το website σου σε 48 ώρες',
-        contactTitle: 'Ξεκίνα σήμερα',
-        contactSubtitle: 'Πες μας τι χρειάζεσαι — μίλησε το brief σου με ένα κλικ.',
+  const defaults = {
+    heroHeadline: 'Φτιάξε το site σου σε 48 ώρες — από 250€',
+    heroSubheadline: 'Με τη δύναμη της Τεχνητής Νοημοσύνης, δημιουργούμε γρήγορα, οικονομικά και επαγγελματικά websites.',
+    heroCta: 'Ξεκίνα τώρα',
+    heroImage: '/images/hero-image.jpg',
+    heroBadge: 'AI-Powered Web Development',
+    heroStats: '100+ ικανοποιημένοι πελάτες',
+    featuresTitle: 'Γιατί να μας επιλέξεις',
+    featuresSubtitle: 'Όλα όσα χρειάζεσαι για να έχεις έτοιμο το website σου σε 48 ώρες',
+    contactTitle: 'Ξεκίνα σήμερα',
+    contactSubtitle: 'Πες μας τι χρειάζεσαι — μίλησε το brief σου με ένα κλικ.',
     // Features Grid Content
     featuresItems: [
       {
@@ -110,6 +123,21 @@ export async function getHomepageContent() {
       },
     ],
   }
+
+  const homepage = await readYamlFile('content/homepage/index.yaml')
+  
+  // If homepage is null/undefined, return defaults
+  if (!homepage) {
+    return defaults
+  }
+  
+  // If homepage is an empty object or missing required properties, merge with defaults
+  if (typeof homepage !== 'object' || !homepage.heroHeadline) {
+    return { ...defaults, ...homepage }
+  }
+  
+  // Merge to ensure all properties exist
+  return { ...defaults, ...homepage }
 }
 
 // Pages functionality removed - only homepage is active
