@@ -4,11 +4,25 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": [".next/**", "!.next/cache/**", "dist/**"]
+      "outputs": [".next/**", "!.next/cache/**", "dist/**"],
+      "env": [
+        "KEYSTATIC_GITHUB_REPO",
+        "KEYSTATIC_GITHUB_OWNER",
+        "KEYSTATIC_GITHUB_BRANCH",
+        "KYESTATIC_GITHUB_APP_SLUG",
+        "GITHUB_TOKEN"
+      ]
     },
     "dev": {
       "cache": false,
-      "persistent": true
+      "persistent": true,
+      "env": [
+        "KEYSTATIC_GITHUB_REPO",
+        "KEYSTATIC_GITHUB_OWNER",
+        "KEYSTATIC_GITHUB_BRANCH",
+        "KYESTATIC_GITHUB_APP_SLUG",
+        "GITHUB_TOKEN"
+      ]
     },
     "lint": {
       "dependsOn": ["^lint"]
