@@ -45,13 +45,21 @@ export async function getSettings() {
     return defaults
   }
   
-  // If settings is an empty object or missing required properties, merge with defaults
-  if (typeof settings !== 'object' || !settings.siteName) {
-    return { ...defaults, ...settings }
+  // If settings is not an object, return defaults
+  if (typeof settings !== 'object' || Array.isArray(settings)) {
+    return defaults
+  }
+  
+  // Type guard: check if settings has siteName property
+  const settingsObj = settings as Record<string, any>
+  
+  // If settings is missing required properties, merge with defaults
+  if (!settingsObj.siteName) {
+    return { ...defaults, ...settingsObj }
   }
   
   // Merge to ensure all properties exist
-  return { ...defaults, ...settings }
+  return { ...defaults, ...settingsObj }
 }
 
 export async function getHomepageContent() {
@@ -131,13 +139,21 @@ export async function getHomepageContent() {
     return defaults
   }
   
-  // If homepage is an empty object or missing required properties, merge with defaults
-  if (typeof homepage !== 'object' || !homepage.heroHeadline) {
-    return { ...defaults, ...homepage }
+  // If homepage is not an object, return defaults
+  if (typeof homepage !== 'object' || Array.isArray(homepage)) {
+    return defaults
+  }
+  
+  // Type guard: check if homepage has heroHeadline property
+  const homepageObj = homepage as Record<string, any>
+  
+  // If homepage is missing required properties, merge with defaults
+  if (!homepageObj.heroHeadline) {
+    return { ...defaults, ...homepageObj }
   }
   
   // Merge to ensure all properties exist
-  return { ...defaults, ...homepage }
+  return { ...defaults, ...homepageObj }
 }
 
 // Pages functionality removed - only homepage is active
