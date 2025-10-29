@@ -1,23 +1,17 @@
 import { config, fields, collection, singleton } from '@keystatic/core'
 
 // Determine storage configuration based on environment variables
+// Keystatic automatically reads KEYSTATIC_GITHUB_CLIENT_ID, KEYSTATIC_GITHUB_CLIENT_SECRET,
+// and KEYSTATIC_SECRET from environment variables - they don't need to be in the config object
 const githubOwner = process.env.KEYSTATIC_GITHUB_OWNER
 const githubRepo = process.env.KEYSTATIC_GITHUB_REPO
 const hasGitHubConfig = githubOwner && githubRepo
-const hasRequiredGitHubAuth = 
-  hasGitHubConfig && 
-  process.env.KEYSTATIC_SECRET && 
-  process.env.KEYSTATIC_GITHUB_CLIENT_ID && 
-  process.env.KEYSTATIC_GITHUB_CLIENT_SECRET
 
 const keystaticConfig = config({
-  storage: hasRequiredGitHubAuth
+  storage: hasGitHubConfig
     ? {
         kind: 'github',
         repo: `${githubOwner}/${githubRepo}`,
-        clientId: process.env.KEYSTATIC_GITHUB_CLIENT_ID!,
-        clientSecret: process.env.KEYSTATIC_GITHUB_CLIENT_SECRET!,
-        secret: process.env.KEYSTATIC_SECRET!,
         ...(process.env.KYESTATIC_GITHUB_APP_SLUG && {
           githubAppSlug: process.env.KYESTATIC_GITHUB_APP_SLUG,
         }),
