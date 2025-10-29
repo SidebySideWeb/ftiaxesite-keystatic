@@ -65,8 +65,16 @@ export async function GET(
   try {
     const handler = await getRouteHandler()
     // Keystatic route handler only expects the request parameter
-    return handler.GET(request)
+    // The handler extracts the path from the request URL automatically
+    const response = await handler.GET(request)
+    return response
   } catch (error) {
+    console.error('Keystatic GET error:', error)
+    console.error('Request URL:', request.url)
+    console.error('Error details:', {
+      message: error instanceof Error ? error.message : String(error),
+      stack: error instanceof Error ? error.stack : undefined
+    })
     return handleError(request, error instanceof Error ? error : new Error(String(error)))
   }
 }
@@ -78,8 +86,16 @@ export async function POST(
   try {
     const handler = await getRouteHandler()
     // Keystatic route handler only expects the request parameter
-    return handler.POST(request)
+    // The handler extracts the path from the request URL automatically
+    const response = await handler.POST(request)
+    return response
   } catch (error) {
+    console.error('Keystatic POST error:', error)
+    console.error('Request URL:', request.url)
+    console.error('Error details:', {
+      message: error instanceof Error ? error.message : String(error),
+      stack: error instanceof Error ? error.stack : undefined
+    })
     return handleError(request, error instanceof Error ? error : new Error(String(error)))
   }
 }

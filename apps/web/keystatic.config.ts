@@ -9,8 +9,10 @@ const githubClientId = process.env.KEYSTATIC_GITHUB_CLIENT_ID
 const githubClientSecret = process.env.KEYSTATIC_GITHUB_CLIENT_SECRET
 const keystaticSecret = process.env.KEYSTATIC_SECRET
 
-// Only enable GitHub mode if ALL required variables are present
-const hasGitHubConfig = 
+// Force local mode if KEYSTATIC_USE_LOCAL is set
+// Otherwise, only enable GitHub mode if ALL required variables are present
+const forceLocal = process.env.KEYSTATIC_USE_LOCAL === 'true'
+const hasGitHubConfig = !forceLocal && 
   githubOwner && 
   githubRepo && 
   githubClientId && 
@@ -21,11 +23,8 @@ const keystaticConfig = config({
   storage: hasGitHubConfig
     ? {
         kind: 'github',
-        // Use object format for repo (matching official Keystatic examples)
-        repo: {
-          owner: githubOwner!,
-          name: githubRepo!,
-        },
+        // Simple string format: 'owner/repo' (e.g., 'SidebySideWeb/ftiaxesite-keystatic')
+        repo: `${githubOwner}/${githubRepo}`,
         // For Next.js, use NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG (see Keystatic docs)
         ...(process.env.NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG && {
           githubAppSlug: process.env.NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG,
