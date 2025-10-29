@@ -1,9 +1,22 @@
 import { config, fields, collection, singleton } from '@keystatic/core'
 
+// Determine storage configuration based on environment variables
+const githubOwner = process.env.KEYSTATIC_GITHUB_OWNER
+const githubRepo = process.env.KEYSTATIC_GITHUB_REPO
+const hasGitHubConfig = githubOwner && githubRepo
+
 const keystaticConfig = config({
-  storage: {
-    kind: 'local', // Local storage - works immediately, no GitHub setup needed
-  },
+  storage: hasGitHubConfig
+    ? {
+        kind: 'github',
+        repo: `${githubOwner}/${githubRepo}`,
+        ...(process.env.KYESTATIC_GITHUB_APP_SLUG && {
+          githubAppSlug: process.env.KYESTATIC_GITHUB_APP_SLUG,
+        }),
+      }
+    : {
+        kind: 'local',
+      },
   ui: {
     brand: {
       name: 'ftiaxesite.gr Admin',
