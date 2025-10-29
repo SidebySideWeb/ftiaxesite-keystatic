@@ -12,7 +12,12 @@ const keystaticConfig = config({
     ? {
         kind: 'github',
         repo: `${githubOwner}/${githubRepo}`,
-        ...(process.env.KYESTATIC_GITHUB_APP_SLUG && {
+        // For Next.js, use NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG (see Keystatic docs)
+        ...(process.env.NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG && {
+          githubAppSlug: process.env.NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG,
+        }),
+        // Fallback to old name for backwards compatibility
+        ...(!process.env.NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG && process.env.KYESTATIC_GITHUB_APP_SLUG && {
           githubAppSlug: process.env.KYESTATIC_GITHUB_APP_SLUG,
         }),
       }

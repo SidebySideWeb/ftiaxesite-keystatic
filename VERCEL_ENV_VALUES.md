@@ -13,7 +13,7 @@ KEYSTATIC_GITHUB_BRANCH=main
 ```
 KEYSTATIC_GITHUB_CLIENT_ID=Iv23li2BBPvq1R0rwHgj
 KEYSTATIC_GITHUB_CLIENT_SECRET=3d71246aa6e52283881ba26fa48f043ca359d7c5
-KYESTATIC_GITHUB_APP_SLUG=keystatic-cms-for-ftiaxesite
+NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG=keystatic-cms-for-ftiaxesite
 ```
 
 ### Session Secret (generated for you)
@@ -51,7 +51,7 @@ Copy the output and use it as `KEYSTATIC_SECRET`.
    - KEYSTATIC_GITHUB_BRANCH = `main` (optional, defaults to main)
    - KEYSTATIC_GITHUB_CLIENT_ID = `Iv23li2BBPvq1R0rwHgj`
    - KEYSTATIC_GITHUB_CLIENT_SECRET = `3d71246aa6e52283881ba26fa48f043ca359d7c5`
-   - KYESTATIC_GITHUB_APP_SLUG = `keystatic-cms-for-ftiaxesite`
+   - NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG = `keystatic-cms-for-ftiaxesite`
    - KEYSTATIC_SECRET = `zYTSvIV4me9WZNNcXZZ4H7g7NWENdDdU2U5K/yZARdA=`
 
 4. **Make sure each variable is enabled for:**

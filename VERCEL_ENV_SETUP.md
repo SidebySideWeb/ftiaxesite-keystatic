@@ -23,9 +23,10 @@ For Keystatic to work in production on Vercel, you need to set the following env
    - You can use: `openssl rand -base64 32` or any password generator
    - Example: `a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0u1v2w3x4y5z6`
 
-6. **KYESTATIC_GITHUB_APP_SLUG** - Your GitHub App slug (optional but recommended)
+6. **NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG** - Your GitHub App slug (required for Next.js)
    - Example: `keystatic-cms-for-ftiaxesite`
    - This is the name/slug of the GitHub App you created for Keystatic
+   - **Note**: For Next.js, this MUST be prefixed with `NEXT_PUBLIC_` (see [Keystatic docs](https://keystatic.com/docs/github-mode))
 
 ## How to Set Environment Variables in Vercel
 
@@ -50,7 +51,7 @@ If you haven't created a GitHub App yet, follow these steps:
 8. **After creating**, go to the app settings page where you'll find:
    - **Client ID** → Use this for `KEYSTATIC_GITHUB_CLIENT_ID`
    - **Generate a new client secret** → Use this for `KEYSTATIC_GITHUB_CLIENT_SECRET`
-   - **App slug** (usually the app name in lowercase with hyphens) → Use this for `KYESTATIC_GITHUB_APP_SLUG`
+   - **App slug** (usually the app name in lowercase with hyphens) → Use this for `NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG`
 
 ## Generate KEYSTATIC_SECRET
 
