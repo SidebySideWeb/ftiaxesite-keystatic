@@ -1,0 +1,108 @@
+import { config } from '@keystatic/core'
+
+const keystaticConfig = config({
+  storage: {
+    kind: 'local',
+  },
+  collections: {
+    pages: {
+      label: 'Pages',
+      slugField: 'title',
+      path: 'content/pages/*',
+      format: { contentField: 'content' },
+      schema: {
+        title: {
+          label: 'Title',
+          type: 'text',
+        },
+        description: {
+          label: 'Description',
+          type: 'text',
+          multiline: true,
+        },
+        content: {
+          label: 'Content',
+          type: 'text',
+          multiline: true,
+        },
+        publishedAt: {
+          label: 'Published Date',
+          type: 'datetime',
+          defaultValue: { kind: 'now' },
+        },
+      },
+    },
+    posts: {
+      label: 'Blog Posts',
+      slugField: 'title',
+      path: 'content/posts/*',
+      format: { contentField: 'content' },
+      schema: {
+        title: {
+          label: 'Title',
+          type: 'text',
+        },
+        description: {
+          label: 'Description',
+          type: 'text',
+          multiline: true,
+        },
+        content: {
+          label: 'Content',
+          type: 'text',
+          multiline: true,
+        },
+        publishedAt: {
+          label: 'Published Date',
+          type: 'datetime',
+          defaultValue: { kind: 'now' },
+        },
+        author: {
+          label: 'Author',
+          type: 'text',
+        },
+        tags: {
+          label: 'Tags',
+          type: 'array',
+          item: {
+            type: 'text',
+          },
+        },
+      },
+    },
+  },
+  singletons: {
+    settings: {
+      label: 'Site Settings',
+      path: 'content/settings',
+      schema: {
+        siteName: {
+          label: 'Site Name',
+          type: 'text',
+          defaultValue: 'My Website',
+        },
+        siteDescription: {
+          label: 'Site Description',
+          type: 'text',
+          multiline: true,
+        },
+        contactEmail: {
+          label: 'Contact Email',
+          type: 'text',
+        },
+        contactPhone: {
+          label: 'Contact Phone',
+          type: 'text',
+        },
+        address: {
+          label: 'Address',
+          type: 'text',
+          multiline: true,
+        },
+      },
+    },
+  },
+})
+
+export default keystaticConfig
+export const reader = keystaticConfig

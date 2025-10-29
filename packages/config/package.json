@@ -1,0 +1,15 @@
+{
+  "name": "@ftiaxesite/config",
+  "version": "1.0.0",
+  "description": "Shared configuration for ftiaxesite monorepo",
+  "main": "index.js",
+  "files": [
+    "eslint",
+    "tailwind",
+    "typescript"
+  ],
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  }
+}
