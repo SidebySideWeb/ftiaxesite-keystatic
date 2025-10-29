@@ -11,7 +11,11 @@ const keystaticConfig = config({
   storage: hasGitHubConfig
     ? {
         kind: 'github',
-        repo: `${githubOwner}/${githubRepo}`,
+        // Use object format for repo (matching official Keystatic examples)
+        repo: {
+          owner: githubOwner!,
+          name: githubRepo!,
+        },
         // For Next.js, use NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG (see Keystatic docs)
         ...(process.env.NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG && {
           githubAppSlug: process.env.NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG,
