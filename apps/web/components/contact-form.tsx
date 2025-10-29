@@ -44,7 +44,7 @@ export default function ContactForm({ data }: ContactFormProps) {
     e.preventDefault()
 
     try {
-      const response = await fetch("https://formspree.io/f/xyznlwpg", {
+      const response = await fetch("https://formspree.io/f/movkkzry", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -158,7 +158,7 @@ export default function ContactForm({ data }: ContactFormProps) {
 
         {/* Form */}
         <form 
-          action="https://formspree.io/f/xyznlwpg"
+          action="https://formspree.io/f/movkkzry"
           method="POST"
           onSubmit={handleSubmit} 
           className="bg-white rounded-2xl shadow-lg p-8 space-y-6"
