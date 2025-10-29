@@ -2,16 +2,7 @@ import { config, fields, collection, singleton } from '@keystatic/core'
 
 const keystaticConfig = config({
   storage: {
-    kind: process.env.KEYSTATIC_GITHUB_REPO ? 'github' : 'local',
-    repo:
-      process.env.KEYSTATIC_GITHUB_REPO &&
-      process.env.KEYSTATIC_GITHUB_OWNER &&
-      `${process.env.KEYSTATIC_GITHUB_OWNER}/${process.env.KEYSTATIC_GITHUB_REPO}`,
-    branch: process.env.KEYSTATIC_GITHUB_BRANCH || 'main',
-    ...(process.env.KEYSTATIC_GITHUB_REPO &&
-      process.env.KYESTATIC_GITHUB_APP_SLUG && {
-        githubAppSlug: process.env.KYESTATIC_GITHUB_APP_SLUG,
-      }),
+    kind: 'local', // Local storage - works immediately, no GitHub setup needed
   },
   ui: {
     brand: {
