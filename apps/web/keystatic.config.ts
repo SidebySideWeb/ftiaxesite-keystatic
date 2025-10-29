@@ -4,12 +4,20 @@ import { config, fields, collection, singleton } from '@keystatic/core'
 const githubOwner = process.env.KEYSTATIC_GITHUB_OWNER
 const githubRepo = process.env.KEYSTATIC_GITHUB_REPO
 const hasGitHubConfig = githubOwner && githubRepo
+const hasRequiredGitHubAuth = 
+  hasGitHubConfig && 
+  process.env.KEYSTATIC_SECRET && 
+  process.env.KEYSTATIC_GITHUB_CLIENT_ID && 
+  process.env.KEYSTATIC_GITHUB_CLIENT_SECRET
 
 const keystaticConfig = config({
-  storage: hasGitHubConfig
+  storage: hasRequiredGitHubAuth
     ? {
         kind: 'github',
         repo: `${githubOwner}/${githubRepo}`,
+        clientId: process.env.KEYSTATIC_GITHUB_CLIENT_ID!,
+        clientSecret: process.env.KEYSTATIC_GITHUB_CLIENT_SECRET!,
+        secret: process.env.KEYSTATIC_SECRET!,
         ...(process.env.KYESTATIC_GITHUB_APP_SLUG && {
           githubAppSlug: process.env.KYESTATIC_GITHUB_APP_SLUG,
         }),
