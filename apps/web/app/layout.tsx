@@ -39,7 +39,7 @@ export default function RootLayout({
       <body className="font-roboto">
         <Header />
         <Suspense fallback={null}>{children}</Suspense>
-        <Analytics />
+        {process.env.NEXT_PUBLIC_VERCEL && <Analytics />}
       </body>
     </html>
   )
