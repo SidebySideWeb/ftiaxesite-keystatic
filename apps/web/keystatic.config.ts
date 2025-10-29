@@ -1,38 +1,20 @@
 import { config, fields, collection, singleton } from '@keystatic/core'
 
-// Determine storage configuration based on environment variables
-// Keystatic automatically reads KEYSTATIC_GITHUB_CLIENT_ID, KEYSTATIC_GITHUB_CLIENT_SECRET,
-// and KEYSTATIC_SECRET from environment variables - they don't need to be in the config object
+// Keystatic automatically reads these environment variables when using GitHub mode:
+// KEYSTATIC_GITHUB_CLIENT_ID, KEYSTATIC_GITHUB_CLIENT_SECRET, KEYSTATIC_SECRET
+// They don't need to be in the config object
+
+// Determine storage mode based on environment variables
 const githubOwner = process.env.KEYSTATIC_GITHUB_OWNER
 const githubRepo = process.env.KEYSTATIC_GITHUB_REPO
-const githubClientId = process.env.KEYSTATIC_GITHUB_CLIENT_ID
-const githubClientSecret = process.env.KEYSTATIC_GITHUB_CLIENT_SECRET
-const keystaticSecret = process.env.KEYSTATIC_SECRET
+const hasGitHubRepo = githubOwner && githubRepo
 
-// Force local mode if KEYSTATIC_USE_LOCAL is set
-// Otherwise, only enable GitHub mode if ALL required variables are present
-const forceLocal = process.env.KEYSTATIC_USE_LOCAL === 'true'
-const hasGitHubConfig = !forceLocal && 
-  githubOwner && 
-  githubRepo && 
-  githubClientId && 
-  githubClientSecret && 
-  keystaticSecret
-
+// Use GitHub mode if repo info is provided, otherwise use local mode
 const keystaticConfig = config({
-  storage: hasGitHubConfig
+  storage: hasGitHubRepo
     ? {
         kind: 'github',
-        // Simple string format: 'owner/repo' (e.g., 'SidebySideWeb/ftiaxesite-keystatic')
-        repo: `${githubOwner}/${githubRepo}`,
-        // For Next.js, use NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG (see Keystatic docs)
-        ...(process.env.NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG && {
-          githubAppSlug: process.env.NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG,
-        }),
-        // Fallback to old name for backwards compatibility
-        ...(!process.env.NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG && process.env.KYESTATIC_GITHUB_APP_SLUG && {
-          githubAppSlug: process.env.KYESTATIC_GITHUB_APP_SLUG,
-        }),
+        repo: `${githubOwner}/${githubRepo}`, // Format: 'owner/repo'
       }
     : {
         kind: 'local',

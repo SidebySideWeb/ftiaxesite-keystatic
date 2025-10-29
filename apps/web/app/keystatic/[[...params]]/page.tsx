@@ -1,3 +1,3 @@
-import KeystaticPage from "../keystatic"
-
-export default KeystaticPage
+export default function Page() {
+  return null;
+}
