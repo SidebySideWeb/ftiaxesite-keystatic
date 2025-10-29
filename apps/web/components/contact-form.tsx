@@ -44,12 +44,16 @@ export default function ContactForm({ data }: ContactFormProps) {
     e.preventDefault()
 
     try {
+      // Use FormData format as recommended by Formspree
+      const formDataToSend = new FormData()
+      formDataToSend.append('name', formData.name)
+      formDataToSend.append('email', formData.email)
+      formDataToSend.append('phone', formData.phone)
+      formDataToSend.append('brief', formData.brief)
+
       const response = await fetch("https://formspree.io/f/movkkzry", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
+        body: formDataToSend,
       })
 
       if (response.ok) {
@@ -61,6 +65,8 @@ export default function ContactForm({ data }: ContactFormProps) {
           brief: "",
         })
       } else {
+        const errorData = await response.json().catch(() => null)
+        console.error("Formspree error:", errorData)
         alert("⚠️ Υπήρξε σφάλμα στην αποστολή. Προσπάθησε ξανά.")
       }
     } catch (error) {
