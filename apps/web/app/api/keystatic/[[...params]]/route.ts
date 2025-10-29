@@ -1,5 +1,4 @@
 import { makeRouteHandler } from '@keystatic/next/route-handler'
-import keystaticConfig from '../../../../keystatic.config'
 import { NextRequest, NextResponse } from 'next/server'
 
 // Prevent static generation at build time
@@ -11,7 +10,7 @@ export const runtime = 'nodejs'
 let routeHandler: ReturnType<typeof makeRouteHandler> | null = null
 let initializationError: Error | null = null
 
-function getRouteHandler() {
+async function getRouteHandler() {
   // Return existing handler if already initialized
   if (routeHandler) {
     return routeHandler
@@ -22,8 +21,11 @@ function getRouteHandler() {
     throw initializationError
   }
   
-  // Try to initialize the handler
+  // Try to initialize the handler - lazy load config to prevent build-time errors
   try {
+    // Dynamically import config only when needed (at runtime, not build time)
+    const { default: keystaticConfig } = await import('../../../../keystatic.config')
+    
     routeHandler = makeRouteHandler({
       config: keystaticConfig,
     })
@@ -61,7 +63,7 @@ export async function GET(
   context: { params: Promise<{ params?: string[] }> }
 ) {
   try {
-    const handler = getRouteHandler()
+    const handler = await getRouteHandler()
     // Keystatic route handler only expects the request parameter
     return handler.GET(request)
   } catch (error) {
@@ -74,7 +76,7 @@ export async function POST(
   context: { params: Promise<{ params?: string[] }> }
 ) {
   try {
-    const handler = getRouteHandler()
+    const handler = await getRouteHandler()
     // Keystatic route handler only expects the request parameter
     return handler.POST(request)
   } catch (error) {
